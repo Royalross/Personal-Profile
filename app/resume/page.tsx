@@ -42,7 +42,7 @@ export default function ResumePage() {
           >
             <Github size={24} />
           </a>
-          <a href="mailto:your.email@example.com" aria-label="Email">
+          <a href="mailto:royaltross.lr@gmail.com" aria-label="Email">
             <Mail size={24} />
           </a>
         </div>
