@@ -253,10 +253,7 @@ export default function MatrixRain() {
 
         // Reset drop when it goes off screen
         if (drop.y - drop.characters.length * 24 > dimensions.height) {
-          dropsRef.current[index] = createDrop(
-            dimensions.width,
-            dimensions.height,
-          );
+          dropsRef.current[index] = createDrop(dimensions.width);
         }
       });
 
@@ -264,7 +261,7 @@ export default function MatrixRain() {
     };
 
     // Helper function to create a new drop
-    const createDrop = (width: number, height: number): Drop => {
+    const createDrop = (width: number): Drop => {
       const charCount = Math.floor(Math.random() * 15) + 5;
       const characters: string[] = [];
 
