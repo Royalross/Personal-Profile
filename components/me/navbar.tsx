@@ -9,6 +9,7 @@ import {
   NavigationMenuList,
   navigationMenuTriggerStyle,
 } from '@/components/ui/navigation-menu';
+import { Menu, X } from 'lucide-react'; // Hamburger and close icons from lucide-react
 
 interface NavbarProps {
   className?: string;
@@ -16,7 +17,9 @@ interface NavbarProps {
 
 export default function Navbar({ className = '' }: NavbarProps) {
   const [isScrolled, setIsScrolled] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
+  // Handle scroll to update background
   useEffect(() => {
     if (typeof window === 'undefined') return; // SSR guard
     let ticking = false;
@@ -33,106 +36,135 @@ export default function Navbar({ className = '' }: NavbarProps) {
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
-  // page‐level override; or apply scroll logic
+  // Determine background classes based on scroll or override
   const bgClasses = className
     ? className
     : isScrolled
-      ? 'bg-[#181E30]/70 bg-opacity-50 backdrop-filter backdrop-blur-md'
+      ? 'bg-[#181E30]/70 backdrop-blur-md'
       : 'bg-transparent';
 
   return (
-    <div
-      className={`
-        fixed top-0 w-full z-50
+    <header
+      className={`fixed top-0 w-full z-50
         px-4 py-2 flex items-center justify-between
         transition-colors duration-300
-        ${bgClasses}
-      `}
+        ${bgClasses}`}
     >
-      {/* my name */}
       <Link href="/" className="text-xl font-bold text-white">
         Lughan Ross
       </Link>
 
-      {/* Nav links */}
-      <NavigationMenu>
-        <NavigationMenuList className="flex space-x-4">
-          {/* Home */}
-          <NavigationMenuItem>
-            <NavigationMenuLink
-              asChild
-              className={
-                navigationMenuTriggerStyle() +
-                ' !bg-transparent hover:!bg-transparent'
-              }
-            >
-              <Link href="/">
-                <span className="text-white font-bold">Home</span>
-              </Link>
-            </NavigationMenuLink>
-          </NavigationMenuItem>
+      {/* Desktop Navigation */}
+      <nav className="hidden lg:flex">
+        <NavigationMenu>
+          <NavigationMenuList className="flex space-x-4">
+            {/* Home */}
+            <NavigationMenuItem>
+              <NavigationMenuLink
+                asChild
+                className={`${navigationMenuTriggerStyle()} !bg-transparent hover:!bg-transparent`}
+              >
+                <Link href="/">
+                  <span className="text-white font-bold">Home</span>
+                </Link>
+              </NavigationMenuLink>
+            </NavigationMenuItem>
 
-          {/* About Me */}
-          <NavigationMenuItem>
-            <NavigationMenuLink
-              asChild
-              className={
-                navigationMenuTriggerStyle() +
-                ' !bg-transparent hover:!bg-transparent'
-              }
-            >
-              <Link href="/about-me">
-                <span className="text-white font-bold">About Me</span>
-              </Link>
-            </NavigationMenuLink>
-          </NavigationMenuItem>
+            {/* About Me */}
+            <NavigationMenuItem>
+              <NavigationMenuLink
+                asChild
+                className={`${navigationMenuTriggerStyle()} !bg-transparent hover:!bg-transparent`}
+              >
+                <Link href="/about-me">
+                  <span className="text-white font-bold">About Me</span>
+                </Link>
+              </NavigationMenuLink>
+            </NavigationMenuItem>
 
-          {/* SWE */}
-          <NavigationMenuItem>
-            <NavigationMenuLink
-              asChild
-              className={
-                navigationMenuTriggerStyle() +
-                ' !bg-transparent hover:!bg-transparent'
-              }
-            >
-              <Link href="#">
-                <span className="text-white font-bold">SWE</span>
-              </Link>
-            </NavigationMenuLink>
-          </NavigationMenuItem>
+            {/* SWE */}
+            <NavigationMenuItem>
+              <NavigationMenuLink
+                asChild
+                className={`${navigationMenuTriggerStyle()} !bg-transparent hover:!bg-transparent`}
+              >
+                <Link href="#">
+                  <span className="text-white font-bold">SWE</span>
+                </Link>
+              </NavigationMenuLink>
+            </NavigationMenuItem>
 
-          {/* Resume */}
-          <NavigationMenuItem>
-            <NavigationMenuLink
-              asChild
-              className={
-                navigationMenuTriggerStyle() +
-                ' !bg-transparent hover:!bg-transparent'
-              }
-            >
-              <Link href="/resume">
-                <span className="text-white font-bold">Resume</span>
-              </Link>
-            </NavigationMenuLink>
-          </NavigationMenuItem>
+            {/* Resume */}
+            <NavigationMenuItem>
+              <NavigationMenuLink
+                asChild
+                className={`${navigationMenuTriggerStyle()} !bg-transparent hover:!bg-transparent`}
+              >
+                <Link href="/resume">
+                  <span className="text-white font-bold">Resume</span>
+                </Link>
+              </NavigationMenuLink>
+            </NavigationMenuItem>
 
-          {/* Contact */}
-          <NavigationMenuItem>
-            <NavigationMenuLink
-              asChild
-              className={
-                navigationMenuTriggerStyle() +
-                ' !bg-transparent hover:!bg-transparent'
-              }
-            >
-              <Link href="#">
-                <span className="text-white font-bold">Contact</span>
+            {/* Contact */}
+            <NavigationMenuItem>
+              <NavigationMenuLink
+                asChild
+                className={`${navigationMenuTriggerStyle()} !bg-transparent hover:!bg-transparent`}
+              >
+                <Link href="#">
+                  <span className="text-white font-bold">Contact</span>
+                </Link>
+              </NavigationMenuLink>
+            </NavigationMenuItem>
+          </NavigationMenuList>
+        </NavigationMenu>
+      </nav>
+
+      {/* Mobile */}
+      <button
+        className="lg:hidden text-white focus:outline-none"
+        onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+        aria-label="Toggle menu"
+      >
+        {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+      </button>
+
+      {/* Mobile Menu */}
+      {mobileMenuOpen && (
+        <nav className="absolute top-full left-0 w-full bg-[#181E30]/90 backdrop-blur-md lg:hidden">
+          <ul className="flex flex-col items-center py-4 space-y-4">
+            <li>
+              <Link href="/" className="text-white text-lg font-semibold">
+                Home
               </Link>
-            </NavigationMenuLink>
-          </NavigationMenuItem>
-        </NavigationMenuList>
-      </NavigationMenu>
-    </div>
+            </li>
+            <li>
+              <Link
+                href="/about-me"
+                className="text-white text-lg font-semibold"
+              >
+                About Me
+              </Link>
+            </li>
+            <li>
+              <Link href="#" className="text-white text-lg font-semibold">
+                SWE
+              </Link>
+            </li>
+            <li>
+              <Link href="/resume" className="text-white text-lg font-semibold">
+                Resume
+              </Link>
+            </li>
+            <li>
+              <Link href="#" className="text-white text-lg font-semibold">
+                Contact
+              </Link>
+            </li>
+          </ul>
+        </nav>
+      )}
+    </header>
   );
 }
