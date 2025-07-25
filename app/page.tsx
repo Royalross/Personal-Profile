@@ -8,7 +8,6 @@ import Image from 'next/image';
 export default function HomePage() {
   return (
     <>
-      {/* Top Section with background image */}
       <section className="relative min-h-screen w-full flex flex-col">
         <Image
           src="/pixels.jpg"
@@ -18,7 +17,6 @@ export default function HomePage() {
           priority // Loads the image eagerly,
         />
 
-        {/* Overlay Content */}
         <div className="relative z-10 flex flex-col h-full min-h-screen">
           <Navbar />
 
@@ -29,7 +27,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Main Section */}
+      {/* Main */}
       <section className="bg-white py-16">
         <div className="max-w-4xl mx-auto px-4">
           <h2 className="text-2xl font-semibold mb-4">The Rest of It</h2>

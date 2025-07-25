@@ -9,7 +9,7 @@ import {
   NavigationMenuList,
   navigationMenuTriggerStyle,
 } from '@/components/ui/navigation-menu';
-import { Menu, X } from 'lucide-react'; // Hamburger and close icons from lucide-react
+import { Menu, X } from 'lucide-react';
 
 interface NavbarProps {
   className?: string;
@@ -54,7 +54,7 @@ export default function Navbar({ className = '' }: NavbarProps) {
         Lughan Ross
       </Link>
 
-      {/* Desktop Navigation */}
+      {/* Desktop */}
       <nav className="hidden lg:flex">
         <NavigationMenu>
           <NavigationMenuList className="flex space-x-4">
@@ -82,18 +82,6 @@ export default function Navbar({ className = '' }: NavbarProps) {
               </NavigationMenuLink>
             </NavigationMenuItem>
 
-            {/* SWE */}
-            <NavigationMenuItem>
-              <NavigationMenuLink
-                asChild
-                className={`${navigationMenuTriggerStyle()} !bg-transparent hover:!bg-transparent`}
-              >
-                <Link href="#">
-                  <span className="text-white font-bold">SWE</span>
-                </Link>
-              </NavigationMenuLink>
-            </NavigationMenuItem>
-
             {/* Resume */}
             <NavigationMenuItem>
               <NavigationMenuLink
@@ -112,8 +100,20 @@ export default function Navbar({ className = '' }: NavbarProps) {
                 asChild
                 className={`${navigationMenuTriggerStyle()} !bg-transparent hover:!bg-transparent`}
               >
-                <Link href="#">
+                <Link href="/contact">
                   <span className="text-white font-bold">Contact</span>
+                </Link>
+              </NavigationMenuLink>
+            </NavigationMenuItem>
+
+            {/* Terminal */}
+            <NavigationMenuItem>
+              <NavigationMenuLink
+                asChild
+                className={`${navigationMenuTriggerStyle()} !bg-transparent hover:!bg-transparent`}
+              >
+                <Link href="/terminal">
+                  <span className="text-white font-bold">Term</span>
                 </Link>
               </NavigationMenuLink>
             </NavigationMenuItem>
@@ -130,7 +130,6 @@ export default function Navbar({ className = '' }: NavbarProps) {
         {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
       </button>
 
-      {/* Mobile Menu */}
       {mobileMenuOpen && (
         <nav className="absolute top-full left-0 w-full bg-[#181E30]/90 backdrop-blur-md lg:hidden">
           <ul className="flex flex-col items-center py-4 space-y-4">
@@ -158,7 +157,10 @@ export default function Navbar({ className = '' }: NavbarProps) {
               </Link>
             </li>
             <li>
-              <Link href="#" className="text-white text-lg font-semibold">
+              <Link
+                href="/contact"
+                className="text-white text-lg font-semibold"
+              >
                 Contact
               </Link>
             </li>
