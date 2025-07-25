@@ -13,7 +13,6 @@ const PDFViewerClient = dynamic(
 export default function ResumePage() {
   return (
     <div className="min-h-screen flex flex-col bg-gray-100">
-      {/* Navbar with slight overrides */}
       <Navbar className="bg-gray-400" />
 
       <main className="flex-grow pt-20 px-4 sm:px-8 lg:px-16">
